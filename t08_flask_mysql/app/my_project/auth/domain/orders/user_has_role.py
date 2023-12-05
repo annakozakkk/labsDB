@@ -11,6 +11,9 @@ class UserHasRole(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     role_id = db.Column(db.Integer, db.ForeignKey('role.role_id'))
+    username = db.Column(db.String(255))
+    role_name = db.Column(db.String(255))
+
 
     def __repr__(self) -> str:
         return f"UserHasRole({self.id}, {self.user_id}, {self.role_id})"
@@ -20,6 +23,8 @@ class UserHasRole(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "role_id": self.role_id,
+            "username":self.username ,
+            "role_name":self.role_name
 
         }
 
@@ -29,5 +34,6 @@ class UserHasRole(db.Model):
             id=dto_dict.get("id"),
             user_id=dto_dict.get("user_id"),
             role_id=dto_dict.get("role_id")
+
         )
         return obj

@@ -17,17 +17,17 @@ def get_all_users() -> Response:
     return make_response(jsonify(user_role_controller.find_all()), HTTPStatus.OK)
 
 
-# @user_role_bp.post('')
-# def create_user() -> Response:
-#     """
-#        Gets all objects from table using Service layer.
-#        :return: Response object
-#     """
-#
-#     content = request.get_json()
-#     user_role = UserHasRole.create_from_dto(content)
-#     user_role_controller.create(user_role)
-#     return make_response(jsonify(user_role.put_into_dto()), HTTPStatus.CREATED)
+@user_role_bp.post('')
+def create_user() -> Response:
+    """
+       Gets all objects from table using Service layer.
+       :return: Response object
+    """
+
+    content = request.get_json()
+    user_role = UserHasRole.create_from_dto(content)
+    user_role_controller.create(user_role)
+    return make_response(jsonify(user_role.put_into_dto()), HTTPStatus.CREATED)
 
 
 @user_role_bp.get('/<int:id>')
@@ -72,3 +72,18 @@ def delete_user(id: int) -> Response:
 
     user_role_controller.delete(id)
     return make_response("User deleted", HTTPStatus.OK)
+@user_role_bp.post('/make_relationship')
+def add_relationship():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    role_id = data.get('role_id')
+
+    if not role_id or not user_id:
+        return jsonify({'error': 'Missing user_id or role_id parameter'}), 400
+
+    result = user_role_controller.add_relationship(user_id, role_id)
+    rows = list(result)
+
+    result_dict = {'success': True, 'result': rows}
+
+    return jsonify(result_dict)

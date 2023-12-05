@@ -43,7 +43,7 @@ class User(db.Model):
                          for channel in self.channels],
             "roles": [{
                 "role_id": role.role_id,
-                "name": role.name,
+                "role_name": role.role_name,
                 "description": role.description,
             } for role in self.roles],
             "messages": [message.put_into_dto() for message in self.messages],
