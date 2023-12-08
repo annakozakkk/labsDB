@@ -1,0 +1,8 @@
+pylint
+PyYAML~=6.0.1
+jsonschema
+
+waitress~=2.1.2
+setuptools~=65.5.1
+SQLAlchemy~=2.0.23
+flask~=3.0.0
